@@ -3,10 +3,7 @@ import { styled, alpha } from '@mui/material/styles';
 import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
 import Toolbar from '@mui/material/Toolbar';
-import IconButton from '@mui/material/IconButton';
-import Typography from '@mui/material/Typography';
 import InputBase from '@mui/material/InputBase';
-import MenuIcon from '@mui/icons-material/Menu';
 import SearchIcon from '@mui/icons-material/Search';
 
 const Search = styled('div')(({ theme }) => ({
@@ -22,6 +19,7 @@ const Search = styled('div')(({ theme }) => ({
     marginLeft: theme.spacing(1),
     width: 'auto',
   },
+  height: '2.5em', // Ajusta a altura da barra de pesquisa
 }));
 
 const SearchIconWrapper = styled('div')(({ theme }) => ({
@@ -39,13 +37,12 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
   width: '100%',
   '& .MuiInputBase-input': {
     padding: theme.spacing(1, 1, 1, 0),
-    // vertical padding + font size from searchIcon
     paddingLeft: `calc(1em + ${theme.spacing(4)})`,
     transition: theme.transitions.create('width'),
     [theme.breakpoints.up('sm')]: {
-      width: '12ch',
+      width: '10ch', // Ajusta a largura inicial
       '&:focus': {
-        width: '20ch',
+        width: '18ch', // Ajusta a largura ao focar
       },
     },
   },
@@ -54,11 +51,11 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
 export default function Navbar({pokemonFilter}) {
   return (
     <Box sx={{ flexGrow: 1, marginBottom: 2 }}>
-      <AppBar position="static" sx={{ backgroundColor: "black" }}>
+      <AppBar position="static" sx={{ backgroundColor: "#454545" }}>
         <Toolbar>
-          <Box display={"flex"} justifyContent={"space-between"} width={"100%"}>
-            <Box component="img" src="/assets/pokemon-logo.png" height={"4em"} />
-            <Search >
+          <Box display="flex" justifyContent="center" alignItems="center" width="100%">
+            <Box component="img" src="/assets/pokemon-logo.png" height="4em" sx={{ marginRight: 2 }} />
+            <Search>
               <SearchIconWrapper>
                 <SearchIcon />
               </SearchIconWrapper>
