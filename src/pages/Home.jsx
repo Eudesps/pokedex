@@ -42,24 +42,23 @@ export const Home = () => {
   };
 
   return (
-    <div>
+    <div style={{ backgroundColor: "#2B2B2B", minHeight: "100vh", paddingBottom: "20px" }}>
       <Navbar pokemonFilter={pokemonFilter} />
-
-      <Container maxWidth={false} sx={{ backgroundColor: "#2B2B2B"}}>
+  
+      <Container maxWidth={false}>
         <Grid container spacing={2} justifyContent="center">
           {filteredPokemons.map((pokemon, key) => (
-            <StyledGridItem item xs={12} sm={6} md={2} key={key} onClick={() => setSelectedPokemon(pokemon.data)}>
+            <Grid item xs={12} sm={6} md={2} key={key} onClick={() => setSelectedPokemon(pokemon.data)}>
               <PokemonCard
                 name={pokemon.data.name}
                 image={pokemon.data.sprites.front_default}
                 types={pokemon.data.types}
               />
-            </StyledGridItem>
+            </Grid>
           ))}
         </Grid>
       </Container>
-
-      {/* Modal do Pokémon */}
+  
       <PokemonModal
         open={!!selectedPokemon}
         handleClose={() => setSelectedPokemon(null)}
@@ -67,6 +66,6 @@ export const Home = () => {
       />
     </div>
   );
-};
+};  
 
 export default Home;
