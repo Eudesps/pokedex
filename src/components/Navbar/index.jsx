@@ -48,26 +48,36 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
   },
 }));
 
-export default function Navbar({pokemonFilter}) {
+export default function Navbar({ pokemonFilter }) {
   return (
-    <Box sx={{ flexGrow: 1, marginBottom: 2 }}>
-      <AppBar position="static" sx={{ backgroundColor: "#454545" }}>
-        <Toolbar>
-          <Box display="flex" justifyContent="center" alignItems="center" width="100%">
-            <Box component="img" src="/assets/pokemon-logo.png" height="4em" sx={{ marginRight: 2 }} />
-            <Search>
-              <SearchIconWrapper>
-                <SearchIcon />
-              </SearchIconWrapper>
-              <StyledInputBase
-                placeholder="Pesquisar"
-                inputProps={{ 'aria-label': 'search' }}
-                onChange={(e) => pokemonFilter(e.target.value)}
-              />
-            </Search>
-          </Box>
-        </Toolbar>
-      </AppBar>
-    </Box>
+    <>
+      {/* Adiciona espaço extra para evitar que o conteúdo fique escondido atrás da Navbar fixa */}
+      <Box sx={{ paddingTop: '4.5em' }}>
+        <AppBar 
+          position="fixed" 
+          sx={{ 
+            backgroundColor: "rgba(69, 69, 69, 0.9)", // Transparente
+            backdropFilter: "blur(10px)", // Efeito de vidro desfocado
+            boxShadow: "none" // Remove a sombra para um design mais clean
+          }}
+        >
+          <Toolbar>
+            <Box display="flex" justifyContent="center" alignItems="center" width="100%">
+              <Box component="img" src="/assets/pokemon-logo.png" height="4em" sx={{ marginRight: 2 }} />
+              <Search>
+                <SearchIconWrapper>
+                  <SearchIcon />
+                </SearchIconWrapper>
+                <StyledInputBase
+                  placeholder="Pesquisar"
+                  inputProps={{ 'aria-label': 'search' }}
+                  onChange={(e) => pokemonFilter(e.target.value)}
+                />
+              </Search>
+            </Box>
+          </Toolbar>
+        </AppBar>
+      </Box>
+    </>
   );
 }

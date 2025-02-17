@@ -1,6 +1,32 @@
 import React, { useEffect, useState } from "react";
-import { Dialog, DialogTitle, DialogContent, DialogActions, Typography, CircularProgress, LinearProgress, Card, CardContent } from "@mui/material";
+import { 
+  Dialog, DialogTitle, DialogContent, DialogActions, Typography, 
+  CircularProgress, LinearProgress, Card, CardContent 
+} from "@mui/material";
+import { alpha } from "@mui/material/styles"; // Importando corretamente o alpha
 import axios from "axios";
+
+// Mapeamento de cores para cada tipo de Pokémon
+const typeColors = {
+  normal: "#A8A77A",
+  fire: "#EE8130",
+  water: "#6390F0",
+  electric: "#F7D02C",
+  grass: "#7AC74C",
+  ice: "#96D9D6",
+  fighting: "#C22E28",
+  poison: "#A33EA1",
+  ground: "#E2BF65",
+  flying: "#A98FF3",
+  psychic: "#F95587",
+  bug: "#A6B91A",
+  rock: "#B6A136",
+  ghost: "#735797",
+  dragon: "#6F35FC",
+  dark: "#705746",
+  steel: "#B7B7CE",
+  fairy: "#D685AD"
+};
 
 const PokemonModal = ({ open, handleClose, pokemon }) => {
   const [evolutionChain, setEvolutionChain] = useState([]);
@@ -49,18 +75,28 @@ const PokemonModal = ({ open, handleClose, pokemon }) => {
 
   if (!pokemon) return null;
 
+  // Pega a cor correspondente ao primeiro tipo do Pokémon
+  const primaryType = pokemon.types[0].type.name;
+  const primaryColor = typeColors[primaryType] || "#A8A77A"; // Cor padrão se o tipo não for encontrado
+  const lighterColor = alpha(primaryColor, 0.3); // Cor mais suave para o fundo
+
   return (
     <Dialog open={open} onClose={handleClose} maxWidth="md" fullWidth>
       <DialogTitle style={{ textAlign: "center", fontWeight: "bold" }}>
         {pokemon.name.toUpperCase()}
       </DialogTitle>
-      <Typography variant="subtitle1" style={{ textAlign: "center", fontStyle: "italic" }}>
-        Atributos e Estatísticas
+      <Typography variant="subtitle1" style={{ textAlign: "center", fontStyle: "italic", fontWeight: "bold" }}>
+        Atributos
       </Typography>
       
       {/* Atributos */}
       <DialogContent>
-        <Card variant="outlined" style={{ padding: "10px", borderRadius: "10px", textAlign: "center" }}>
+        <Card variant="outlined" style={{ 
+          padding: "10px", 
+          borderRadius: "10px", 
+          textAlign: "center", 
+          backgroundColor: lighterColor // Aplicando a cor suave baseada no tipo
+        }}>
           <CardContent>
             <Typography variant="body1" style={{ fontWeight: "bold" }}>Altura</Typography>
             <Typography variant="body2" style={{ marginBottom: "8px" }}>{pokemon.height * 10} cm</Typography>
@@ -104,15 +140,27 @@ const PokemonModal = ({ open, handleClose, pokemon }) => {
           </Typography>
           {pokemon.stats.map((stat, index) => (
             <div key={index} style={{ marginBottom: "8px" }}>
-              <Typography variant="body2" style={{fontWeight: "bold" }}>{stat.stat.name.toUpperCase()}</Typography>
-              <LinearProgress variant="determinate" value={(stat.base_stat / 150) * 100} style={{height: "10px", borderRadius: "5px" }} />
+              <Typography variant="body2" style={{ fontWeight: "bold" }}>
+                {stat.stat.name.toUpperCase()}
+              </Typography>
+              <LinearProgress
+                variant="determinate"
+                value={(stat.base_stat / 150) * 100}
+                sx={{
+                  height: "10px",
+                  borderRadius: "5px",
+                  backgroundColor: alpha(primaryColor, 0.3), // Cor de fundo da barra (transparente)
+                  "& .MuiLinearProgress-bar": {
+                    backgroundColor: primaryColor, // Cor principal da barra
+                  },
+                }}
+              />
             </div>
           ))}
         </div>
       </DialogContent>
 
-      <DialogActions style={{ justifyContent: "center" }}>
-      </DialogActions>
+      <DialogActions style={{ justifyContent: "center" }} />
     </Dialog>
   );
 };
